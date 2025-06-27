@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "Y/MbY5vAIhNtyvdJdG+w2KDvA6TkIUwoj4+jpcirux0=",
+  "Source": "CloudNotes.Api",
+  "BasePath": "_content/CloudNotes.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
