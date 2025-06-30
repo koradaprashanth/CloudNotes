@@ -1,0 +1,29 @@
+name: Run EF Migrations
+
+on:
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  migrate:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.x
+
+      - name: Restore project
+        run: dotnet restore
+
+      - name: Install EF Core CLI tools
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Run EF Database Update
+        run: |
+          dotnet ef database update --connection "$env:AZURE_SQL_CONNECTION_STRING"
+        env:
+          AZURE_SQL_CONNECTION_STRING: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
