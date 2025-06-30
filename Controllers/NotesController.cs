@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CloudNotes.Api.Models;
+using CloudNotes.Api.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CloudNotes.Api.Controllers
 {
@@ -7,47 +9,60 @@ namespace CloudNotes.Api.Controllers
     [Route("api/[controller]")]
     public class NotesController : ControllerBase
     {
-        private static List<Note> _notes = new List<Note>();
-        private static int _nextId = 1;
+        private readonly NotesDbContext _context;
+
+        public NotesController(NotesDbContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Note>> Get() => Ok(_notes);
+        public async Task<ActionResult<IEnumerable<Note>>> Get()
+        {
+            return await _context.Notes.OrderByDescending(n => n.CreatedAt).ToListAsync();
+        }
 
         [HttpGet("{id}")]
-        public ActionResult<Note> Get(int id)
+        public async Task<ActionResult<Note>> Get(int id)
         {
-            var note = _notes.FirstOrDefault(n => n.Id == id);
+            var note = await _context.Notes.FindAsync(id);
             if (note == null) return NotFound();
-            return Ok(note);
+            return note;
         }
 
         [HttpPost]
-        public ActionResult<Note> Post(Note note)
+        public async Task<ActionResult<Note>> Post(Note note)
         {
-            note.Id = _nextId++;
             note.CreatedAt = DateTime.UtcNow;
-            _notes.Add(note);
+            _context.Notes.Add(note);
+            await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(Get), new { id = note.Id }, note);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Note updatedNote)
+        public async Task<IActionResult> Put(int id, Note updatedNote)
         {
-            var note = _notes.FirstOrDefault(n => n.Id == id);
+            if (id != updatedNote.Id) return BadRequest();
+
+            var note = await _context.Notes.FindAsync(id);
             if (note == null) return NotFound();
 
             note.Title = updatedNote.Title;
             note.Content = updatedNote.Content;
+
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var note = _notes.FirstOrDefault(n => n.Id == id);
+            var note = await _context.Notes.FindAsync(id);
             if (note == null) return NotFound();
 
-            _notes.Remove(note);
+            _context.Notes.Remove(note);
+            await _context.SaveChangesAsync();
+
             return NoContent();
         }
     }
