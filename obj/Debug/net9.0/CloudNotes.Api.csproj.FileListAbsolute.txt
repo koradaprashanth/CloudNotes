@@ -34,3 +34,4 @@ C:\Users\PKorada\CloudNotes.Api\obj\Debug\net9.0\ref\CloudNotes.Api.dll
 C:\Users\PKorada\CloudNotes.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\PKorada\CloudNotes.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\PKorada\CloudNotes.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\PKorada\CloudNotes.Api\obj\Debug\net9.0\CloudNotes.Api.sourcelink.json
