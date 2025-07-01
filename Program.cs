@@ -4,17 +4,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CloudNotes.Api.Data;
 using CloudNotes.Api.Models;
+using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Configuration.AddAzureKeyVault(
+    new Uri($"https://cloudnotes-keyvault.vault.azure.net/"),
+    new DefaultAzureCredential()
+);
+
+var connectionString = builder.Configuration["AZURE_SQL_CONNECTION_STRING"];
+
 builder.Services.AddDbContext<NotesDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        sqlOptions => sqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 5,
-            maxRetryDelay: TimeSpan.FromSeconds(10),
-            errorNumbersToAdd: null)
-    )
+    options.UseSqlServer(connectionString)
 );
 
 // Add services to the container.

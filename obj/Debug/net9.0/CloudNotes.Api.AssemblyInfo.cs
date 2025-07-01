@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CloudNotes.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f72ce0b12a7438432be9aff4a7579d440900ce26")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+593b5816581cbf9483f9bcdc5f32fa0b9ef1332e")]
 [assembly: System.Reflection.AssemblyProductAttribute("CloudNotes.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CloudNotes.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
