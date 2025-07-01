@@ -15,7 +15,7 @@ builder.Configuration.AddAzureKeyVault(
     new DefaultAzureCredential()
 );
 
-var connectionString = builder.Configuration["AZURE_SQL_CONNECTION_STRING"];
+var connectionString = builder.Configuration["azure-sql-connection-string"];
 
 builder.Services.AddDbContext<NotesDbContext>(options =>
     options.UseSqlServer(connectionString)
