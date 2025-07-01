@@ -16,7 +16,8 @@ builder.Configuration.AddAzureKeyVault(
 );
 
 var connectionString = builder.Configuration["azure-sql-connection-string"];
-
+if (string.IsNullOrEmpty(connectionString))
+    throw new Exception("SQL connection string not found in Key Vault!");
 builder.Services.AddDbContext<NotesDbContext>(options =>
     options.UseSqlServer(connectionString)
 );
